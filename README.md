@@ -38,7 +38,7 @@ TMDB API-KEY:
 - Clone your application's code repository onto the EC2 instance:
     
     ```bash
-    git clone https://github.com/abhipraydhoble/netflix/tree/main
+    git clone https://github.com/harshg1301/netflix/tree/main
     ```
     
 
@@ -228,7 +228,7 @@ pipeline {
         }
         stage('Checkout from Git') {
             steps {
-                git branch: 'main', url: 'https://github.com/abhipraydhoble/netflix.git'
+                git branch: 'main', url: 'https://github.com/harshg1301/netflix.git'
             }
         }
         stage("Sonarqube Analysis") {
@@ -318,7 +318,7 @@ pipeline{
         }
         stage('Checkout from Git'){
             steps{
-                git branch: 'main', url: 'https://github.com/abhipraydhoble/netflix.git'
+                git branch: 'main', url: 'https://github.com/harshg1301/netflix.git'
             }
         }
         stage("Sonarqube Analysis "){
@@ -357,20 +357,20 @@ pipeline{
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
                        sh "docker build --build-arg TMDB_V3_API_KEY=<yourapikey> -t netflix ."
-                       sh "docker tag netflix abhipraydhoble/netflix:latest "
-                       sh "docker push abhipraydhoble/netflix:latest "
+                       sh "docker tag netflix shivam491/netflix:latest "
+                       sh "docker push shivam491/netflix:latest "
                     }
                 }
             }
         }
         stage("TRIVY"){
             steps{
-                sh "trivy image abhipraydhoble/netflix:latest > trivyimage.txt" 
+                sh "trivy image harshg1301/netflix:latest > trivyimage.txt" 
             }
         }
         stage('Deploy to container'){
             steps{
-                sh 'docker run -d --name netflix -p 8081:80 abhipraydhoble/netflix:latest'
+                sh 'docker run -d --name netflix -p 8081:80 shivam491/netflix:latest'
             }
         }
     }
